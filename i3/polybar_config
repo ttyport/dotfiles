@@ -1,0 +1,102 @@
+[colors]
+background = #222
+background-alt = #444
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+[bar/rainbow]
+width = 100%
+height = 20
+fixed-center = false
+background = ${colors.background}
+foreground = ${colors.foreground}
+line-size = 3
+line-color = #f00
+border-size = 0
+border-color = #00000000
+padding-left = 0
+padding-right = 2
+module-margin-left = 1
+module-margin-right = 2
+font-0 = fixed:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;1
+modules-left = i3
+modules-right = cpu memory battery pulseaudio xkeyboard date
+tray-position = right
+tray-padding = 0
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+label-layout = %layout%
+label-layout-underline = #0000FF
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+enable-click = false
+enable-scroll = false
+pin-workspaces = true
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+label-focused = %index%
+label-focused-underline = ${colors.primary}
+label-focused-padding = 2
+label-unfocused = %index%
+label-unfocused-padding = 2
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+[module/cpu]
+type = internal/cpu
+interval = 3
+format-underline = #ff0018
+label = %percentage%%
+
+[module/memory]
+type = internal/memory
+interval = 3
+format-underline = #FF7F00
+label = %percentage_used%%
+
+[module/date]
+type = internal/date
+interval = 1 
+date-alt = "%Y.%m.%d "
+time = %I:%M %p
+time-alt = %I:%M:%S %p
+format-underline = #800080
+label = %date%%time%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+format-volume = %percentage%%
+format-volume-underline = #00FF00
+format-muted-underline = #00FF00
+label-muted = muted
+
+[module/battery]
+type = internal/battery
+full-at = 99
+battery = BAT1
+adapter = AC0
+format-empty-underline = #FFFF00
+format-discharging-underline = #FFFF00
+format-charging-underline = #FFFF00
+format-full-underline = #FFFF00
+
+[settings]
+screenchange-reload = true

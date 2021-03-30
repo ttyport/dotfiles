@@ -1,0 +1,248 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+;background = ${xrdb:color0:#222}
+background = #1did21
+background-alt = #444 
+;foreground = ${xrdb:color7:#222}
+foreground = #1d1f21
+foreground-alt = #1d1f21
+primary = #1d1f2110
+secondary = #1d1f2110
+alert = #bd2c40
+
+[bar/example]
+;monitor = ${env:MONITOR:HDMI-1}
+;monitor = ${env:MONITOR:DP-1}
+width = 100%
+height = 35
+;offset-x = 1%
+;offset-y = 1%
+;radius = 6.0
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 0
+padding-right = 2
+tray-maxsize = 25
+dpi = 160
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = OpenSans-ExtraBold:size=10:antialias:true:weight=bold
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;1
+
+modules-left = i3
+modules-center = title
+;modules-right = pulseaudio xkeyboard date
+modules-right = music cpu memory temperature pulseaudio xkeyboard date 
+tray-position = left
+tray-padding = 0
+;tray-background = #0063ff
+
+;wm-restack = bspwm
+;wm-restack = i3
+
+;override-redirect = true
+
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/kill]
+type = custom/text
+content = 
+content-foreground = ${color.fg}
+click-left = exec i3-msg kill &
+
+[module/title]
+type = internal/xwindow
+format = <label>
+format-background = ${color.bg}
+format-foreground = ${color.white}
+format-padding = 0
+label = %title%
+label-maxlen = 50
+label-empty =
+label-empty-foreground = #707880
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+label-layout = %layout%
+label-layout-underline = #0000FF
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-underline = ${colors.secondary}
+
+[module/ewmh]
+type = internal/xworkspaces
+
+pin-workspaces = true
+enable-click = true
+enable-scroll = true
+
+label-active = %name%
+label-active-foreground = ${colors.foreground}
+label-active-underline = ${colors.foreground}
+label-active-background = ${colors.background}
+label-active-padding = 1
+
+label-empty = %name%
+label-empty-padding = 1
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+
+enable-click = false
+enable-scroll = false
+
+; Only show workspaces on the same output as the bar
+;pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = #1d1f2110
+label-mode-background = #1d1f2110
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-background = #1d1f2110
+label-focused-underline= #1d1f21
+label-focused-padding = 2
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-background = #1d1f2110
+label-visible-underline = #1d1f21
+label-visible-padding = #1d1f2110
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+; Separator in between workspaces
+; label-separator = |
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-underline = #ff0018
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-underline = #FF7F00
+label = %percentage_used%%
+
+[module/date]
+type = internal/date
+interval = 1 
+
+date =
+date-alt = "%Y.%m.%d"
+
+time = %H:%M
+time-alt = %H:%M
+format-underline = #800080
+
+label = %date% %time%
+
+[module/eth]
+type=internal/network
+interface=enp0s31f6
+interval=0.5
+label-connected=[🠕: %upspeed% | 🠗: %downspeed%]
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${root.foreground}
+format-volume-underline = #00FF00
+label-muted = muted
+label-muted-foreground = #666
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+format-underline = #FFFF00
+format-warn =  <label-warn>
+format-warn-underline = #FFFF00
+
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.secondary}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = ${colors.foreground-alt}
+
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input
+
+
+[module/music]
+type = custom/script
+interval = 1
+
+label = %output%
+exec = ~/.config/polybar/music
+
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+
+; vim:ft=dosini
