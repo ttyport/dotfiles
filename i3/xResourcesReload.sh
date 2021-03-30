@@ -1,1 +1,0 @@
-xrdb /home/coon/.Xresources
